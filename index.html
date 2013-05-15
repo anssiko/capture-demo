@@ -1,13 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>HTML Media Capture Demo</title>
+  <title>HTML Media Capture Examples</title>
+  <link rel="stylesheet" href="base.css">
 </head>
 <body>
-<h1>HTML Media Capture Demo</h1>
+<h1>HTML Media Capture Examples</h1>
+
+<button onclick="window.open('https://raw.github.com/anssiko/html-media-capture/gh-pages/index.html', '_blank')">View page source</button>
+
+<p> These examples have been adapted from the <a href="http://dev.w3.org/2009/dap/camera/#examples">Examples</a> section of the <a href="http://dev.w3.org/2009/dap/camera/">HTML Media Capture spec</a>.</p>
+
+<p>The examples demonstrate how to give hints that it is preferred for the user to capture media of a specific MIME type using the media capture capabilities of the hosting device. Both a simple declarative example using an HTML form, as well as a more advanced example including scripting, are presented.<p>
+
+<h2>Test for @capture existence</h2>
+<p>Testing for attribute existence only.</p>
+<p id="supported"></p>
+
+<h2>Example 1</h2>
+<p>To take a picture using the device's local still image capture device, such as a camera, and upload the picture taken using an HTML form:</p>
+<pre>
+  &lt;input type="file" accept="image/*" capture&gt;
+</pre>
+<form action="#" method="post" enctype="multipart/form-data">
+  <input type="file" name="image" accept="image/*" capture>
+  <input type="submit" value="Upload">
+</form>
+
+<h2>Example 2</h2>
+<p>Or alternatively, to capture video using the device's local video camera:</p>
+<pre>
+  &lt;input type="file" accept="video/*" capture&gt;
+</pre>
+<form action="server.cgi" method="post" enctype="multipart/form-data">
+  <input type="file" name="video" accept="video/*" capture>
+  <input type="submit" value="Upload">
+</form>
+
+<h2>Example 3</h2>
+<p>Or alternatively, to capture audio using the device's local microphone:</p>
+<pre>
+  &lt;input type="file" accept="audio/*" capture&gt;
+</pre>
+<form action="server.cgi" method="post" enctype="multipart/form-data">
+  <input type="file" name="audio" accept="audio/*" capture>
+  <input type="submit" value="Upload">
+</form>
+
+<h2>Examples 4-7</h2>
+<p>For more advanced use cases, specify the capture attribute in markup and handle the file upload in script via XMLHttpRequest:</p>
 
 <pre>&lt;input type="file" accept="image/*" capture&gt;</pre>
-<input type="file" accept="image/*" capture>
+<input id="example4" type="file" accept="image/*" capture>
+
+<h2>Examples without @capture</h2>
 
 <pre>&lt;input type="file" accept="image/*"&gt;</pre>
 <input type="file" accept="image/*">
@@ -16,7 +62,23 @@
 <input type="file">
 
 <script>
-var input = document.querySelector('input[type=file]');
+
+// test for @capture existence
+
+function supported(attribute) {
+  var i = document.createElement('input');
+  i.setAttribute(attribute, true);
+  return !!i[attribute];
+}
+
+document.querySelector('#supported').innerHTML =
+  'It appears <strong>@capture is ' + (supported('capture') ? 'supported' : 'not supported') +
+  '</strong> and <strong>@accept is ' + (supported('accept') ? 'supported' : 'not supported') + '</strong>.';
+
+// examples from the spec
+
+//var input = document.querySelector('input[type=file]');
+var input = document.querySelector('#example4');
 
 input.onchange = function () {
   var file = input.files[0];
@@ -70,7 +132,7 @@ function displayAsImage(file) {
   img.src = imgURL;
   document.body.appendChild(img);
 }
-</script>
 
+</script>
 </body>
 </html>
