@@ -48,3 +48,21 @@ h3 {
     padding: 10px;
     margin-top: 25px;
 }
+
+#output {
+  visibility: hidden;
+  animation: blinker 1s cubic-bezier(.5, 0, 1, 1) infinite alternate; 
+  -webkit-animation: blinker 1s cubic-bezier(.5, 0, 1, 1) infinite alternate; 
+}
+
+@keyframes blinker {  
+  0% { opacity: 1.0; }
+  50% { opacity: 0.25; }
+  100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {  
+  0% { opacity: 1.0; }
+  50% { opacity: 0.25; }
+  100% { opacity: 1.0; }
+}
