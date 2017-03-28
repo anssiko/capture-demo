@@ -1,4 +1,4 @@
 HTML Media Capture Examples
 ==================
 
-These [examples](http://anssiko.github.io/html-media-capture/) have been adapted from the [HTML Media Capture specification](http://dev.w3.org/2009/dap/camera/).
+These examples have been adapted from the [HTML Media Capture specification](https://w3c.github.io/html-media-capture/).

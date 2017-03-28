@@ -5,13 +5,20 @@ body {
     top: 0px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 20px;
-    padding-right: 20px;
-    max-width: 50em;
+    max-width: 35em;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 h1, h2, h3 {
     color: #005a9c;
+}
+
+section {
+    background-color: #f0f0f0;
+    border: solid 2px lightgray;
+    margin: 25px;
+    padding: 5px;
 }
 
 h1 {
@@ -38,7 +45,7 @@ h3 {
     background-color: #fffde3;
     border: solid 1px #e7e7ce;
     padding: 10px;
-    margin-top: 15px;
+    margin: 25px;
 }
 
 #footer {

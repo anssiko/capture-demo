@@ -9,101 +9,61 @@
   <body>
     <h1>
       HTML Media Capture Examples
-    </h1><button onclick=
-    "window.open('https://raw.github.com/anssiko/html-media-capture/gh-pages/index.html', '_blank')">View
-    page source</button>
+    </h1>
     <p>
       These examples have been adapted from the <a href=
-      "http://dev.w3.org/2009/dap/camera/#examples">Examples</a> section of the
-      <a href="http://dev.w3.org/2009/dap/camera/">HTML Media Capture spec</a>.
-    </p>
-    <p>
-      The examples demonstrate how to give hints that it is preferred for the
-      user to capture media of a specific MIME type using the media capture
-      capabilities of the hosting device. Both a simple declarative example
-      using an HTML form, as well as a more advanced example including
-      scripting, are presented.
-    </p>
-    <p></p>
-    <p>
-      For implementation status, see the <a href=
-      "http://www.w3.org/2009/dap/wiki/ImplementationStatus#HTML_Media_Capture">
-      wiki</a>.
-    </p>
-    <h2>
-      Test for @capture and @accept existence
-    </h2>
-    <p>
-      Testing for attribute existence only.
+      "https://w3c.github.io/html-media-capture/#examples">Examples</a> section
+      of the <a href="https://w3c.github.io/html-media-capture/">HTML Media
+      Capture</a> spec.
     </p>
     <p id="supported"></p>
-    <h2>
-      Example 1
-    </h2>
-    <p>
-      To take a picture using the device's local still image capture device,
-      such as a camera, and upload the picture taken using an HTML form:
-    </p>
-    <pre>
-  &lt;input type="file" accept="image/*" capture&gt;
+    <section>
+      <pre>
+  &lt;input type="file" accept="image/*" capture="user"&gt;
 </pre>
-    <form action="#" method="post" enctype="multipart/form-data">
-      <input type="file" name="image" accept="image/*" capture=""> <input type=
-      "submit" value="Upload">
-    </form>
-    <h2>
-      Example 2
-    </h2>
-    <p>
-      Or alternatively, to capture video using the device's local video camera:
-    </p>
-    <pre>
-  &lt;input type="file" accept="video/*" capture&gt;
+      <form action="#" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" capture="user">
+        <input type="submit" value="Upload">
+      </form>
+    </section>
+    <section>
+      <pre>
+  &lt;input type="file" accept="video/*" capture="environment"&gt;
 </pre>
-    <form action="#" method="post" enctype="multipart/form-data">
-      <input type="file" name="video" accept="video/*" capture=""> <input type=
-      "submit" value="Upload">
-    </form>
-    <h2>
-      Example 3
-    </h2>
-    <p>
-      Or alternatively, to capture audio using the device's local microphone:
-    </p>
-    <pre>
+      <form action="#" method="post" enctype="multipart/form-data">
+        <input type="file" name="video" accept="video/*" capture="environment">
+        <input type="submit" value="Upload">
+      </form>
+    </section>
+    <section>
+      <pre>
   &lt;input type="file" accept="audio/*" capture&gt;
 </pre>
-    <form action="#" method="post" enctype="multipart/form-data">
-      <input type="file" name="audio" accept="audio/*" capture=""> <input type=
-      "submit" value="Upload">
-    </form>
-    <h2>
-      Examples 4-7
-    </h2>
+      <form action="#" method="post" enctype="multipart/form-data">
+        <input type="file" name="audio" accept="audio/*" capture="">
+        <input type="submit" value="Upload">
+      </form>
+    </section>
+    <section>
+      <pre>&lt;input type="file" accept="image/*" capture&gt;</pre>
+      <form>
+        <input id="example4" type="file" accept="image/*" capture="">
+      </form>
+    </section>
+    <section>
+      <pre>&lt;input type="file" accept="image/*"&gt;</pre>
+      <form>
+        <input type="file" accept="image/*">
+      </form>
+    </section>
+    <section>
+      <pre>&lt;input type="file"&gt;</pre>
+      <form>
+        <input type="file">
+      </form>
+    </section>
     <p>
-      For more advanced use cases, specify the capture attribute in markup and
-      handle the file upload in script via XMLHttpRequest:
-    </p>
-    <pre>&lt;input type="file" accept="image/*" capture&gt;</pre>
-    <form>
-      <input id="example4" type="file" accept="image/*" capture="">
-    </form>
-    <h2>
-      Examples without @capture
-    </h2>
-    <pre>&lt;input type="file" accept="image/*"&gt;</pre>
-    <form>
-      <input type="file" accept="image/*">
-    </form>
-    <pre>&lt;input type="file"&gt;</pre>
-    <form>
-      <input type="file">
-    </form>
-    <h2>
-      @capture and @download
-    </h2>
-    <p>
-      See <a href="capture-and-download.html">capture-and-download.html</a>.
+      See also <a href="capture-and-download.html">@capture with @download</a>.
     </p>
     <script>
 
@@ -178,8 +138,5 @@
     }
 
     </script>
-    <div id="footer">
-      by <a href="http://twitter.com/anssik">@anssik</a>
-    </div>
   </body>
 </html>
