@@ -1,142 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="no-js">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-      HTML Media Capture Examples
+      HTML Media Capture demo
     </title>
-    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/demo.css">
+    <link rel="stylesheet" type="text/css" href="css/component.css">
+    <style>
+      img.camera { width: 32px; height: 32px; display: block; margin: auto; }
+    </style>
   </head>
   <body>
-    <h1>
-      HTML Media Capture Examples
-    </h1>
-    <p>
-      These examples have been adapted from the <a href=
-      "https://w3c.github.io/html-media-capture/#examples">Examples</a> section
-      of the <a href="https://w3c.github.io/html-media-capture/">HTML Media
-      Capture</a> spec.
-    </p>
-    <p id="supported"></p>
-    <section>
-      <pre>
-  &lt;input type="file" accept="image/*" capture="user"&gt;
-</pre>
-      <form action="#" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*" capture="user">
-        <input type="submit" value="Upload">
-      </form>
-    </section>
-    <section>
-      <pre>
-  &lt;input type="file" accept="video/*" capture="environment"&gt;
-</pre>
-      <form action="#" method="post" enctype="multipart/form-data">
-        <input type="file" name="video" accept="video/*" capture="environment">
-        <input type="submit" value="Upload">
-      </form>
-    </section>
-    <section>
-      <pre>
-  &lt;input type="file" accept="audio/*" capture&gt;
-</pre>
-      <form action="#" method="post" enctype="multipart/form-data">
-        <input type="file" name="audio" accept="audio/*" capture="">
-        <input type="submit" value="Upload">
-      </form>
-    </section>
-    <section>
-      <pre>&lt;input type="file" accept="image/*" capture&gt;</pre>
-      <form>
-        <input id="example4" type="file" accept="image/*" capture="">
-      </form>
-    </section>
-    <section>
-      <pre>&lt;input type="file" accept="image/*"&gt;</pre>
-      <form>
-        <input type="file" accept="image/*">
-      </form>
-    </section>
-    <section>
-      <pre>&lt;input type="file"&gt;</pre>
-      <form>
-        <input type="file">
-      </form>
-    </section>
-    <p>
-      See also <a href="capture-and-download.html">@capture with @download</a>.
-    </p>
-    <script>
+    <div class="container">
+      <header class="codrops-header">
+        <h1>
+          HTML Media Capture demo
+        </h1>
+        <p>
+          Demo for the <strong><a href=
+          "https://w3c.github.io/html-media-capture/">HTML Media
+          Capture</a></strong> feature that enables capture of live media such
+          as images and video from the device's camera via <code>&lt;input
+          type="file"&gt;</code>.
+        </p>
+      </header>
+      <div class="content">
+        <div class="box">
+          <input type="file" accept="image/*" capture="user"
+          id="file-1" class="inputfile inputfile-1">
+          <label for="file-1">
+            <img srcset="svg/camera.svg" class="camera">
+            <span>Take a selfie&hellip;</span>
+          </label>
+        <div class="box" id="img-container-1">
+          <img id="img-placeholder-1">
+        </div>
+      </div>
+      <script>
 
-    // test for @capture existence
+      let file1 = document.querySelector('#file-1');
+      let imgContainer1 = document.querySelector('#img-container-1');
+      let imgPlaceholder1 = imgContainer1.firstChild;
 
-    function supported(attribute) {
-    var i = document.createElement('input');
-    i.setAttribute(attribute, true);
-    return !!i[attribute];
-    }
+      file1.onchange = () => {
+        let imgURL = URL.createObjectURL(file1.files[0]);
+        let img = document.createElement('img');
 
-    document.querySelector('#supported').innerHTML =
-    'It appears <strong>@capture is ' + (supported('capture') ? 'supported' : 'not supported') +
-    '<\/strong> and <strong>@accept is ' + (supported('accept') ? 'supported' : 'not supported') + '<\/strong>.';
+        img.onload = () => {
+          URL.revokeObjectURL(imgURL);
+        };
 
-    // examples from the spec
+        img.src = imgURL;
+        img.style.width = '100%';
+        img.onclick = () => { img.style.width = (!!img.style.width) ? null : '100%'; };
+        imgPlaceholder1.nextElementSibling.remove();
+        imgContainer1.append(img);
+      };
 
-    //var input = document.querySelector('input[type=file]');
-    var input = document.querySelector('#example4');
-
-    input.onchange = function () {
-    var file = input.files[0];
-
-    // upload(file);
-    drawOnCanvas(file);
-    displayAsImage(file);
-    };
-
-    function upload(file) {
-    var form = new FormData(),
-      xhr = new XMLHttpRequest();
-
-    form.append('image', file);
-    xhr.open('post', 'server.php', true);
-    xhr.send(form);
-    }
-
-    function drawOnCanvas(file) {
-    var reader = new FileReader(),
-      c = document.createElement('canvas');
-
-    document.body.appendChild(c);
-
-    reader.onload = function (e) {
-    var dataURL = e.target.result,
-        c = document.querySelector('canvas'),
-        ctx = c.getContext('2d'),
-        img = new Image();
-        
-    img.onload = function() {
-      c.width = img.width;
-      c.height = img.height;
-      ctx.drawImage(img, 0, 0);
-    };
-
-    img.src = dataURL;
-    };
-
-    reader.readAsDataURL(file);
-    }
-
-    function displayAsImage(file) {
-    var imgURL = URL.createObjectURL(file),
-      img = document.createElement('img');
-
-    img.onload = function() {
-    URL.revokeObjectURL(imgURL);
-    };
-
-    img.src = imgURL;
-    document.body.appendChild(img);
-    }
-
-    </script>
+      </script>
+      <script>
+      (function(e,t,n) {
+        var r = e.querySelectorAll("html")[0];
+        r.className = r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2");
+      })(document, window, 0);
+      </script>
+      <script src="js/custom-file-input.js">
+      </script>
+    </div>
   </body>
 </html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      HTML Media Capture Examples
+    </title>
+    <link rel="stylesheet" href="base.css">
+  </head>
+  <body>
+    <h1>
+      HTML Media Capture Examples
+    </h1>
+    <p>
+      These examples have been adapted from the <a href=
+      "https://w3c.github.io/html-media-capture/#examples">Examples</a> section
+      of the <a href="https://w3c.github.io/html-media-capture/">HTML Media
+      Capture</a> spec.
+    </p>
+    <p id="supported"></p>
+    <section>
+      <pre>
+  &lt;input type="file" accept="image/*" capture="user"&gt;
+</pre>
+      <form action="#" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" capture="user">
+        <input type="submit" value="Upload">
+      </form>
+    </section>
+    <section>
+      <pre>
+  &lt;input type="file" accept="video/*" capture="environment"&gt;
+</pre>
+      <form action="#" method="post" enctype="multipart/form-data">
+        <input type="file" name="video" accept="video/*" capture="environment">
+        <input type="submit" value="Upload">
+      </form>
+    </section>
+    <section>
+      <pre>
+  &lt;input type="file" accept="audio/*" capture&gt;
+</pre>
+      <form action="#" method="post" enctype="multipart/form-data">
+        <input type="file" name="audio" accept="audio/*" capture="">
+        <input type="submit" value="Upload">
+      </form>
+    </section>
+    <section>
+      <pre>&lt;input type="file" accept="image/*" capture&gt;</pre>
+      <form>
+        <input id="example4" type="file" accept="image/*" capture="">
+      </form>
+    </section>
+    <section>
+      <pre>&lt;input type="file" accept="image/*"&gt;</pre>
+      <form>
+        <input type="file" accept="image/*">
+      </form>
+    </section>
+    <section>
+      <pre>&lt;input type="file"&gt;</pre>
+      <form>
+        <input type="file">
+      </form>
+    </section>
+    <p>
+      See also <a href="capture-and-download.html">@capture with @download</a>.
+    </p>
+    <script>
+
+    // test for @capture existence
+
+    function supported(attribute) {
+    var i = document.createElement('input');
+    i.setAttribute(attribute, true);
+    return !!i[attribute];
+    }
+
+    document.querySelector('#supported').innerHTML =
+    'It appears <strong>@capture is ' + (supported('capture') ? 'supported' : 'not supported') +
+    '<\/strong> and <strong>@accept is ' + (supported('accept') ? 'supported' : 'not supported') + '<\/strong>.';
+
+    // examples from the spec
+
+    //var input = document.querySelector('input[type=file]');
+    var input = document.querySelector('#example4');
+
+    input.onchange = function () {
+    var file = input.files[0];
+
+    // upload(file);
+    drawOnCanvas(file);
+    displayAsImage(file);
+    };
+
+    function upload(file) {
+    var form = new FormData(),
+      xhr = new XMLHttpRequest();
+
+    form.append('image', file);
+    xhr.open('post', 'server.php', true);
+    xhr.send(form);
+    }
+
+    function drawOnCanvas(file) {
+    var reader = new FileReader(),
+      c = document.createElement('canvas');
+
+    document.body.appendChild(c);
+
+    reader.onload = function (e) {
+    var dataURL = e.target.result,
+        c = document.querySelector('canvas'),
+        ctx = c.getContext('2d'),
+        img = new Image();
+        
+    img.onload = function() {
+      c.width = img.width;
+      c.height = img.height;
+      ctx.drawImage(img, 0, 0);
+    };
+
+    img.src = dataURL;
+    };
+
+    reader.readAsDataURL(file);
+    }
+
+    function displayAsImage(file) {
+    var imgURL = URL.createObjectURL(file),
+      img = document.createElement('img');
+
+    img.onload = function() {
+    URL.revokeObjectURL(imgURL);
+    };
+
+    img.src = imgURL;
+    document.body.appendChild(img);
+    }
+
+    </script>
+  </body>
+</html>
